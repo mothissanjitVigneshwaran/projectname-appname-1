@@ -1,4 +1,4 @@
-pipeline{
+pipeline
     environment {
     account = "${environment}" 
     eks_cluster_name = "eks-${account}" 
@@ -7,7 +7,7 @@ pipeline{
     job_root_dir="${env.WORKSPACE}"
     }
     tools { 
-        maven 'maven-3.8.1' 
+        maven 'maven-3.8.6' 
        
     }
     agent {
@@ -37,6 +37,7 @@ pipeline{
         steps {
         script {
             env.KUBECONFIG = "${artifacts_dir}/${eks_cluster_name}-kubeconfig"
+
             sh 'chmod +x ${WORKSPACE}/generate_kubeconfig_eks.sh'
         }
         sh(script: '${WORKSPACE}/generate_kubeconfig_eks.sh', label: 'Generate kubeconfig file')
